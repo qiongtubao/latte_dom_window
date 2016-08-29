@@ -1,0 +1,31 @@
+{
+	"keys": {
+
+	},
+	"build": [
+		{
+			"command": "three",
+			"types": "js",
+			"files_modules": ["basic"],
+			"out": "./build/{{version}}/{{name}}.js"
+		},
+		{
+			"command": "copy",
+			"type": "js",
+			"in": ["./build/{{version}}/{{name}}.js"],
+			"out": ["./html/{{name}}.js"]
+		},
+		{
+			"command": "mini",
+			"type": "js",
+			"in": ["./build/{{version}}/{{name}}.js"],
+			"out": ["./build/{{name}}.js"]
+		}
+
+	],
+	"files_modules": {
+		"basic": {
+			"./lib": "latte_dom"	
+		}
+	}
+}

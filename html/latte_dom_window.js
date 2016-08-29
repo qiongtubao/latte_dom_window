@@ -1,5 +1,76 @@
 
 (function(define) {'use strict'
+	define("latte_dom/c/commands/window/static/index.css", ["require", "exports", "module", "window"],
+ 	function(require, exports, module, window) {
+ 		module.exports='.staticWindow {    position: relative;    background-color: #fff;    -webkit-background-clip: padding-box;    background-clip: padding-box;    border: 1px solid #999;    border: 1px solid rgba(0,0,0,.2);    border-radius: 6px;    outline: 0;    -webkit-box-shadow: 0 3px 9px rgba(0,0,0,.5);    box-shadow: 0 3px 9px rgba(0,0,0,.5);}@media (min-width: 768px) {   .staticWindow {   	 	-webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);	    box-shadow: 0 5px 15px rgba(0,0,0,.5);	}}.staticWindow  .lwheader{    min-height: 16.43px;    padding: 15px;    border-bottom: 1px solid #e5e5e5;}.staticWindow .lwtitle {	margin: 0;    line-height: 1.42857143;}.staticWindow h4 {	font-size: 18px;	font-weight: 500;}.staticWindow button.lwclose {    -webkit-appearance: none;    padding: 0;    cursor: pointer;    background: 0 0;    border: 0;}.staticWindow .lwclose {    float: right;    font-size: 21px;    font-weight: 700;    line-height: 1;    color: #000;    text-shadow: 0 1px 0 #fff;    filter: alpha(opacity=20);    opacity: .2;}.staticWindow .lwheader .lwclose {   margin-top: -2px;}.staticWindow .lwbody {    position: relative;    padding: 15px;}'
+ 	});
+})(typeof define === "function"? define: function(name, reqs, factory) { factory(require, exports, module); });
+(function(define) {'use strict'
+define("latte_dom/c/commands/window/static/index.js", ["require", "exports", "module", "window"],
+function(require, exports, module, window) {
+(function() {
+	var View = require("../../../../v/view.js");
+	this.create = function(data, dom, controller) {
+		var dataName = dom.attr("latte-window-data");
+		var child = dom.children[0];
+		dom.removeChild(child);
+		dom.classed("staticWindow",1);
+				var closeDom = document.createElement("button");
+				var close = View.create(closeDom);
+				close.classed({
+					lwclose:1
+				});
+				close.attr("latte-click", "close");
+					var spanDom = document.createElement("span");
+					spanDom.innerHTML = "x";
+					close.appendChild(spanDom);
+
+				var titleDom = document.createElement("h4");
+				var title = View.create(titleDom);
+				title.attr("latte-html", "{{title}}");
+				title.classed({
+					lwtitle: 1
+				});
+			var headerDom = document.createElement("div");
+			var header = View.create(headerDom);
+			header.classed({
+				lwheader: 1
+			});
+			header.appendChild(closeDom);
+			header.appendChild(titleDom);
+		
+
+			var bodyDom = document.createElement("div");
+			var body = View.create(bodyDom);
+			body.classed({
+				lwbody:1
+			});
+			body.appendChild(child);
+
+		dom.appendChild(headerDom);
+		dom.appendChild(bodyDom);
+		var change = function(now, old) {
+			var Controller = require("../../../controller.js");
+			if(old) {
+				Controller.removeChild(dom.node(), old);
+			}
+			if(now) {
+
+				Controller.createChild(dom.node(), now);
+			}
+		};
+		change(data.get(dataName));
+		controller.bind("data", dataName, change);
+
+
+		
+	}
+}).call(module.exports);
+require("latte_dom/utils/css.js").importCssString(require("./index.css"), "latte_window_static_css");
+
+});
+})(typeof define === "function"? define: function(name, reqs, factory) { factory(require, exports, module); });
+(function(define) {'use strict'
 define("latte_dom/c/commands/window/window/index.js", ["require", "exports", "module", "window"],
 function(require, exports, module, window) {
 
